@@ -1,7 +1,7 @@
 use regex::Regex;
 use std::collections::HashMap;
 
-const keys: [&str; 8] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"];
+const KEYS: [&str; 8] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"];
 
 struct Passport(HashMap<String, String>);
 impl Passport {
@@ -11,7 +11,7 @@ impl Passport {
             let pair: Vec<_> = pair.split(":").collect();
             let key = pair[0];
             let value = pair[1];
-            if !keys.contains(&key) {
+            if !KEYS.contains(&key) {
                 return None;
             }
             passport.insert(key.to_owned(), value.to_owned());
@@ -30,7 +30,7 @@ impl Passport {
             let pair: Vec<_> = pair.split(":").collect();
             let key = pair[0];
             let value = pair[1];
-            if !keys.contains(&key) {
+            if !KEYS.contains(&key) {
                 return None;
             }
             let valid = Passport::field_is_valid(key, value);
