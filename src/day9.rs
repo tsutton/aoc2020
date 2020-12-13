@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::collections::VecDeque;
 
 #[aoc_generator(day9)]
@@ -54,25 +53,25 @@ fn search(buf: &VecDeque<(i64, VecDeque<i64>)>, val: &i64) -> bool {
 pub fn day2(input: &[i64]) -> i64 {
     let day1_answer = day1(input);
 
-    // map: sum => (min in the sequence, max in the sequence)
-    let mut live_sums: HashMap<i64, (i64, i64)> = HashMap::new();
+    // (sum, (min in the sequence, max in the sequence))
+    let mut live_sums: Vec<(i64, (i64, i64))> = vec![];
     let mut count = 0;
     for &next in input {
-        let mut new_live_sums = HashMap::new();
+        let mut new_live_sums = Vec::with_capacity(live_sums.len());
         for (k, (min, max)) in live_sums {
             let new_min = min.min(next);
             let new_max = max.max(next);
             if next + k == day1_answer {
                 return new_min + new_max;
             }
-            new_live_sums.insert(next + k, (new_min, new_max));
+            new_live_sums.push((next + k, (new_min, new_max)));
         }
-        new_live_sums.insert(next, (next, next));
+        new_live_sums.push((next, (next, next)));
         live_sums = new_live_sums;
         if count <= 10 {
             println!("{:?}", live_sums);
             count += 1;
         }
     }
-    todo!()
+    unreachable!()
 }
