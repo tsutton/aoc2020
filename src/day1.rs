@@ -11,7 +11,7 @@ pub fn day1_parse(input: &str) -> Vec<i32> {
 }
 
 #[aoc(day1, part1)]
-pub fn day1_solve(vals: &Vec<i32>) -> i32 {
+pub fn day1_solve(vals: &[i32]) -> i32 {
     let mut set = HashSet::new();
     for t in vals {
         if set.contains(&(2020 - t)) {
@@ -24,7 +24,7 @@ pub fn day1_solve(vals: &Vec<i32>) -> i32 {
 }
 
 #[aoc(day1, part2)]
-pub fn day1_solve2(vals: &Vec<i32>) -> i32 {
+pub fn day1_solve2(vals: &[i32]) -> i32 {
     let mut twofolds = HashMap::new();
     for t1 in vals {
         for t2 in vals {

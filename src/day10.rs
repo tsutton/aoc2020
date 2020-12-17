@@ -6,9 +6,9 @@ pub fn gen(input: &str) -> Vec<i64> {
 }
 
 #[aoc(day10, part1)]
-pub fn day10(input: &Vec<i64>) -> i64 {
-    let mut input = input.clone();
-    input.sort();
+pub fn day10(input: &[i64]) -> i64 {
+    let mut input = input.to_owned();
+    input.sort_unstable();
     let (ones, threes, _) = input.iter().fold((0, 0, 0), |(ones, threes, prev), next| {
         if next - prev == 1 {
             (ones + 1, threes, *next)
@@ -24,9 +24,9 @@ pub fn day10(input: &Vec<i64>) -> i64 {
 /// Dynamic programmic: sort the input and iterate, computing for each adapter the number
 /// of chains ending with that adapter. Our answer is the number of ways for the built-in adapter
 #[aoc(day10, part2)]
-pub fn day10_2(input: &Vec<i64>) -> i64 {
-    let mut input = input.clone();
-    input.sort();
+pub fn day10_2(input: &[i64]) -> i64 {
+    let mut input = input.to_owned();
+    input.sort_unstable();
     input.push(input[input.len() - 1] + 3);
     let mut n_ways: HashMap<i64, i64> = HashMap::new();
     n_ways.insert(0, 1);

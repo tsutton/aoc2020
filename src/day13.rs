@@ -22,11 +22,10 @@ pub fn parse(input: &str) -> Input {
 #[aoc(day13, part1)]
 pub fn day1(input: &Input) -> i32 {
     let ids_and_minutes = input.buses.iter().map(|bus| (bus, bus - input.time % bus));
-    let answer = ids_and_minutes
+    ids_and_minutes
         .min_by_key(|(_, y)| *y)
         .map(|(x, y)| x * y)
-        .unwrap();
-    answer
+        .unwrap()
 }
 
 pub struct Input2 {
@@ -65,7 +64,7 @@ pub fn day2(input: &Input2) -> i64 {
         let diff = (product / id) * modinverse(product / id, *id).unwrap();
         println!("diff, diff mod id: {}, {}", diff, diff % id);
         answer += -val * diff;
-        answer = answer % product;
+        answer %= product;
     }
     if answer >= 0 {
         answer

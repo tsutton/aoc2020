@@ -8,7 +8,7 @@ impl Passport {
     fn from_str(s: &str) -> Option<Passport> {
         let mut passport = HashMap::new();
         for pair in s.split_whitespace() {
-            let pair: Vec<_> = pair.split(":").collect();
+            let pair: Vec<_> = pair.split(':').collect();
             let key = pair[0];
             let value = pair[1];
             if !KEYS.contains(&key) {
@@ -27,7 +27,7 @@ impl Passport {
     fn from_str_with_validation(s: &str) -> Option<Passport> {
         let mut passport = HashMap::new();
         for pair in s.split_whitespace() {
-            let pair: Vec<_> = pair.split(":").collect();
+            let pair: Vec<_> = pair.split(':').collect();
             let key = pair[0];
             let value = pair[1];
             if !KEYS.contains(&key) {

@@ -13,7 +13,7 @@ pub fn gen(input: &str) -> Vec<Group> {
 }
 
 #[aoc(day6, part1)]
-pub fn part1(groups: &Vec<Group>) -> i64 {
+pub fn part1(groups: &[Group]) -> i64 {
     let mut ans = 0;
     for group in groups {
         let mut acc = HashSet::new();
@@ -26,7 +26,7 @@ pub fn part1(groups: &Vec<Group>) -> i64 {
 }
 
 #[aoc(day6, part2)]
-pub fn part2(groups: &Vec<Group>) -> i64 {
+pub fn part2(groups: &[Group]) -> i64 {
     let mut ans = 0;
     for group in groups {
         let mut acc = group[0].clone();

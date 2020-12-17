@@ -25,7 +25,7 @@ pub fn gen(input: &str) -> Vec<Row> {
 }
 
 #[aoc(day2, part1)]
-pub fn solve_1(input: &Vec<Row>) -> i32 {
+pub fn solve_1(input: &[Row]) -> i32 {
     let mut ans = 0;
     for row in input {
         let count = row.password.matches(row.letter).count();
@@ -37,7 +37,7 @@ pub fn solve_1(input: &Vec<Row>) -> i32 {
 }
 
 #[aoc(day2, part2)]
-pub fn solve_2(input: &Vec<Row>) -> i32 {
+pub fn solve_2(input: &[Row]) -> i32 {
     let mut ans = 0;
     for row in input {
         let mut count = 0;

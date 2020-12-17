@@ -32,7 +32,7 @@ pub fn pt1_go(input: &[(i64, i64)]) -> i64 {
 }
 
 #[aoc(day5, part2)]
-pub fn pt2_go(input: &Vec<(i64, i64)>) -> i64 {
+pub fn pt2_go(input: &[(i64, i64)]) -> i64 {
     let mut ids: Vec<_> = input.iter().map(|(x, y)| 8 * x + y).collect::<Vec<_>>();
     ids.sort_unstable();
     // println!("{:?}", ids);

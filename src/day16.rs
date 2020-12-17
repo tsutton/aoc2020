@@ -3,7 +3,7 @@ use std::collections::HashSet;
 
 use regex::Regex;
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub struct Rule {
     field: String,
     bounds: Vec<(i64, i64)>,
@@ -44,7 +44,7 @@ pub fn parse(input: &str) -> (Vec<Rule>, Ticket, Vec<Ticket>) {
         .lines()
         .nth(1)
         .unwrap()
-        .split(",")
+        .split(',')
         .map(|x| x.parse().unwrap())
         .collect();
     println!("{:?}", my_ticket);
@@ -53,7 +53,7 @@ pub fn parse(input: &str) -> (Vec<Rule>, Ticket, Vec<Ticket>) {
     let nearby_tickets = neary_ticket_lines
         .lines()
         .skip(1)
-        .map(|s| s.split(",").map(|x| x.parse().unwrap()).collect())
+        .map(|s| s.split(',').map(|x| x.parse().unwrap()).collect())
         .collect();
 
     (rules, my_ticket, nearby_tickets)
@@ -131,7 +131,7 @@ fn in_bounds(key: i64, bounds: &[(i64, i64)]) -> bool {
             return true;
         }
     }
-    return false;
+    false
 }
 
 #[aoc(day16, part2)]
@@ -159,7 +159,7 @@ pub fn day2(input: &(Vec<Rule>, Ticket, Vec<Ticket>)) -> i64 {
         // as we go, narrow down the list of possible fields that the rule could be
         let mut potential_fields: HashSet<_> = (0..num_fields).collect();
         for ticket in &potential_tickets {
-            let fields_copy = potential_fields.iter().map(|x| *x).collect::<Vec<_>>();
+            let fields_copy = potential_fields.iter().copied().collect::<Vec<_>>();
             for field in fields_copy {
                 let value = ticket[field];
                 if !in_bounds(value, &rule.bounds) {
@@ -176,17 +176,17 @@ pub fn day2(input: &(Vec<Rule>, Ticket, Vec<Ticket>)) -> i64 {
     // luckily a pretty simple strategy seems to work:
     // find a rule that has only one possible field, mark that field as unavailble to other fields
     // then repeat until we exhaust all the rules.
-    let mut final_mapping: HashMap<&Rule, usize> = HashMap::new();
-    while possibilities.len() > 0 {
+    let mut final_mapping: HashMap<Rule, usize> = HashMap::new();
+    while !possibilities.is_empty() {
         // find something with only one possibility
         let only_one = possibilities.iter().find(|(_, v)| v.len() == 1).unwrap();
         // add it to final mapping
-        let rule = (*only_one.0).clone();
+        let rule = only_one.0.clone();
         let values: Vec<_> = only_one.1.iter().collect();
         let value = *values[0];
         println!("{} is field {}", rule.field, value);
+        possibilities.remove(&rule);
         final_mapping.insert(rule, value);
-        possibilities.remove(rule);
         for (_, v) in possibilities.iter_mut() {
             v.remove(&value);
         }

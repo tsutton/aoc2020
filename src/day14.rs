@@ -106,7 +106,7 @@ pub fn day2(input: &[Instr]) -> i64 {
         match instr {
             Instr::Mask(s) => mask = s,
             Instr::Assign(addr, val) => {
-                let addrs = apply_mask_2(&(*addr).try_into().unwrap(), &mask);
+                let addrs = apply_mask_2(addr, &mask);
                 if count <= 10 {
                     println!("applied mask {} to {} and got {:?}", mask, val, addrs);
                 }

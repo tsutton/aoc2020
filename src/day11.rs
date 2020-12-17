@@ -75,7 +75,7 @@ impl Layout {
                 return Seat;
             }
         }
-        return *sq;
+        *sq
     }
 
     fn step(&self) -> Layout {
@@ -153,7 +153,7 @@ impl Layout {
                 return Seat;
             }
         }
-        return *sq;
+        *sq
     }
 
     fn step_part2(&self) -> Layout {

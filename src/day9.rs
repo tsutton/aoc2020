@@ -38,7 +38,7 @@ fn search(buf: &VecDeque<(i64, VecDeque<i64>)>, val: &i64) -> bool {
             }
         }
     }
-    return false;
+    false
 }
 
 /// O(n^2) alg: make one pass through input, computing all possible subsequence sums as we go

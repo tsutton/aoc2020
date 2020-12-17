@@ -39,7 +39,7 @@ impl Execution {
     fn step(&mut self) {
         let instr = self.program[usize::try_from(self.pc).unwrap()];
         match instr {
-            Jmp(arg) => self.pc = self.pc + arg,
+            Jmp(arg) => self.pc += arg,
             Acc(arg) => {
                 self.pc += 1;
                 self.acc += arg;
@@ -58,11 +58,11 @@ pub fn parse(input: &str) -> Vec<Instruction> {
 }
 
 #[aoc(day8, part1)]
-pub fn day1(input: &Vec<Instruction>) -> i32 {
+pub fn day1(input: &[Instruction]) -> i32 {
     let mut execution = Execution {
         acc: 0,
         pc: 0,
-        program: input.clone(),
+        program: input.to_owned(),
     };
     execution.run_to_completion().unwrap_err()
 }
@@ -82,11 +82,11 @@ impl Execution {
     }
 }
 #[aoc(day8, part2)]
-pub fn day2(input: &Vec<Instruction>) -> i32 {
+pub fn day2(input: &[Instruction]) -> i32 {
     for (i, instr) in input.iter().enumerate() {
         let mut exec = match instr {
             Jmp(v) => {
-                let mut program = input.clone();
+                let mut program = input.to_owned();
                 program[i] = Nop(*v);
                 Execution {
                     program,
@@ -95,7 +95,7 @@ pub fn day2(input: &Vec<Instruction>) -> i32 {
                 }
             }
             Nop(v) => {
-                let mut program = input.clone();
+                let mut program = input.to_owned();
                 program[i] = Jmp(*v);
                 Execution {
                     program,

@@ -7,7 +7,7 @@ use std::rc::Rc;
 pub fn gen(input: &str) -> HashMap<String, Vec<(usize, String)>> {
     let mut rules = HashMap::new();
     for line in input.lines() {
-        let words: Vec<_> = line.split(" ").collect();
+        let words: Vec<_> = line.split(' ').collect();
         let source = words[..2].join(" ");
         if words[4] == "no" {
             rules.insert(source, vec![]);
@@ -65,7 +65,7 @@ fn day2_helper(
     if let Some(val) = cache.borrow().get(target) {
         return *val;
     }
-    let children = input.get(target).cloned().unwrap_or(vec![]);
+    let children = input.get(target).cloned().unwrap_or_default();
     let mut acc = 1;
 
     for child in children {

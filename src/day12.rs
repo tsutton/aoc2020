@@ -35,7 +35,7 @@ impl TryFrom<&str> for Instr {
             'S' => Ok(Instr::S(body)),
             'W' => Ok(Instr::W(body)),
 
-            x => Err(format!("bad letter {}", x).into()),
+            x => Err(format!("bad letter {}", x)),
         }
     }
 }
