@@ -47,7 +47,9 @@ fn next_token(input: &mut &str) -> Option<Token> {
             Some(Token::Times)
         }
         '0'..='9' => {
-            let last_idx = input.find(|c| c < '0' || c > '9').unwrap_or(input.len());
+            let last_idx = input
+                .find(|c| c < '0' || c > '9')
+                .unwrap_or_else(|| input.len());
             let num_str = &input[..last_idx];
             let ret = Token::Value(num_str.parse().unwrap());
             *input = &input[last_idx..];
@@ -287,10 +289,10 @@ mod test {
 
 #[aoc(day18, part1)]
 fn day1(input: &str) -> i64 {
-    input.lines().map(|line| evaluate_1(line.clone())).sum()
+    input.lines().map(|line| evaluate_1(line)).sum()
 }
 
 #[aoc(day18, part2)]
 fn day2(input: &str) -> i64 {
-    input.lines().map(|line| evaluate_2(line.clone())).sum()
+    input.lines().map(|line| evaluate_2(line)).sum()
 }
