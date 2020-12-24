@@ -60,9 +60,9 @@ fn step(cups: &mut Vec<u32>, current_cup: u32) -> u32 {
     cups.insert(target_cup_idx + 3, group[2]);
 
     let current_index = cups.iter().position(|x| x == &current_cup).unwrap();
-    return cups[(current_index + 1) % 9];
     // println!("{:?}", cups);
     // println!("Current: {}", current_cup);
+    cups[(current_index + 1) % 9]
 }
 
 /// I was stuck a long time on this problem and looked up how other people structured
@@ -105,12 +105,12 @@ struct Cups {
 
 impl Cups {
     fn new(inital: &[usize], length: usize) -> Cups {
-        let mut nexts = Vec::with_capacity(length + 1);
-        nexts.resize(length + 1, 0);
+        let mut nexts = vec![0; length+1];
         for i in 0..inital.len() - 1 {
             nexts[inital[i]] = inital[i + 1];
         }
         nexts[inital[inital.len() - 1]] = inital.len() + 1;
+	#[allow(clippy::needless_range_loop)]
         for i in inital.len() + 1..length {
             nexts[i] = i + 1;
         }
