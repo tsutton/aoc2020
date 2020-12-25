@@ -1,5 +1,4 @@
 use std::{convert::TryInto, time::Instant};
-// use std::{collections::{hash_map::DefaultHasher, HashSet}, hash::{Hash, Hasher}};
 
 #[aoc(day23, part1)]
 pub fn part1(input: &str) -> String {

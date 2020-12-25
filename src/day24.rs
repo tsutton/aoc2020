@@ -83,14 +83,12 @@ impl Bounds {
     fn update(&mut self, x: i32, y: i32) {
         if x < self.min_x {
             self.min_x = x;
-        }
-        if x > self.max_x {
+        } else if x > self.max_x {
             self.max_x = x;
         }
         if y < self.min_y {
             self.min_y = y;
-        }
-        if y > self.max_y {
+        } else if y > self.max_y {
             self.max_y = y;
         }
     }
@@ -133,8 +131,8 @@ pub fn part2(input: &str) -> usize {
         });
     let n_steps = 100;
     for _ in 0..n_steps {
-	// let black_count = tiles.values().filter(|&x| x == &Color::Black).count();
-	// println!("black count: {}; bounds: {:?}", black_count, bounds);
+        // let black_count = tiles.values().filter(|&x| x == &Color::Black).count();
+        // println!("black count: {}; bounds: {:?}", black_count, bounds);
         let output = step(&tiles, &bounds);
         tiles = output.0;
         bounds = output.1;
@@ -152,20 +150,15 @@ fn step(
         for y in (bounds.min_y - 1)..=(bounds.max_y + 1) {
             let neighbors = black_neighbors(grid, (x, y));
             match grid.get(&(x, y)).unwrap_or(&Color::White) {
-                Color::Black => {
-                    if !(neighbors == 0 || neighbors > 2) {
-                        new_grid.insert((x, y), Color::Black);
-			new_bounds.update(x, y);
-                    }
-                    // no need to insert in the white case
+                Color::Black if !(neighbors == 0 || neighbors > 2) => {
+                    new_grid.insert((x, y), Color::Black);
+                    new_bounds.update(x, y);
                 }
-                Color::White => {
-                    if neighbors == 2 {
-                        new_grid.insert((x, y), Color::Black);
-			new_bounds.update(x, y);
-                    }
-                    // no need to insert in the white case
+                Color::White if neighbors == 2 => {
+                    new_grid.insert((x, y), Color::Black);
+                    new_bounds.update(x, y);
                 }
+                _ => {}
             }
         }
     }
