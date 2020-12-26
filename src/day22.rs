@@ -71,34 +71,32 @@ enum GameResult {
     P2Game,
 }
 
-// Note: this prints *a lot* which slows it down *a lot*
-// On my computer it runs in 10 second swith the prints, and ~700ms with them commented out.
 fn play_recursive(p1: &mut VecDeque<usize>, p2: &mut VecDeque<usize>) -> GameResult {
     let mut positions = HashSet::new();
     loop {
-        println!();
-        println!("P1: {:?}", p1);
-        println!("P2: {:?}", p2);
+        // println!();
+        // println!("P1: {:?}", p1);
+        // println!("P2: {:?}", p2);
         if positions.contains(&(p1.clone(), p2.clone())) {
-            println!("position occured, P1 wins game");
+            // println!("position occured, P1 wins game");
             return GameResult::P1Game;
         }
         positions.insert((p1.clone(), p2.clone()));
         let c1 = p1.pop_front().unwrap();
         let c2 = p2.pop_front().unwrap();
         if c1 <= p1.len() && c2 <= p2.len() {
-            println!("entering subgame");
+            // println!("entering subgame");
             let mut new_p1 = p1.iter().take(c1).copied().collect();
             let mut new_p2 = p2.iter().take(c2).copied().collect();
             let r = play_recursive(&mut new_p1, &mut new_p2);
             match r {
                 GameResult::P1Game => {
-                    println!("p1 wins subgame");
+                    // println!("p1 wins subgame");
                     p1.push_back(c1);
                     p1.push_back(c2);
                 }
                 GameResult::P2Game => {
-                    println!("p2 wins subgame");
+                    // println!("p2 wins subgame");
                     p2.push_back(c2);
                     p2.push_back(c1);
                 }

@@ -1,4 +1,4 @@
-use std::{convert::TryInto, time::Instant};
+use std::convert::TryInto;
 
 #[aoc(day23, part1)]
 pub fn part1(input: &str) -> String {
@@ -82,13 +82,8 @@ pub fn part2(input: &str) -> usize {
         .collect();
     let mut cups = Cups::new(&base_cups, 1_000_000);
 
-    // ok good luck see you tomorrow
-    let start = Instant::now();
-    for i in 0..10_000_000 {
+    for _ in 0..10_000_000 {
         cups.step();
-        if i % 200_000 == 0 {
-            println!("step {}, elapsed {:?}", i, start.elapsed())
-        }
     }
 
     let after_one = cups.nexts[1];
@@ -104,12 +99,12 @@ struct Cups {
 
 impl Cups {
     fn new(inital: &[usize], length: usize) -> Cups {
-        let mut nexts = vec![0; length+1];
+        let mut nexts = vec![0; length + 1];
         for i in 0..inital.len() - 1 {
             nexts[inital[i]] = inital[i + 1];
         }
         nexts[inital[inital.len() - 1]] = inital.len() + 1;
-	#[allow(clippy::needless_range_loop)]
+        #[allow(clippy::needless_range_loop)]
         for i in inital.len() + 1..length {
             nexts[i] = i + 1;
         }
@@ -132,11 +127,11 @@ impl Cups {
             target_cup = (target_cup + (m - 2)) % m + 1;
         }
 
-	self.nexts[self.current_cup] = self.nexts[third_removed];
-	self.nexts[third_removed] = self.nexts[target_cup];
-	self.nexts[target_cup] = first_removed;
+        self.nexts[self.current_cup] = self.nexts[third_removed];
+        self.nexts[third_removed] = self.nexts[target_cup];
+        self.nexts[target_cup] = first_removed;
 
-	self.current_cup = self.nexts[self.current_cup];
+        self.current_cup = self.nexts[self.current_cup];
     }
 }
 
@@ -158,11 +153,11 @@ mod test {
             vec![0, 2, 5, 8, 6, 4, 7, 10, 9, 1, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3]
         );
 
-	cups.step();
+        cups.step();
         assert_eq!(
             cups.nexts,
             vec![0, 5, 8, 2, 6, 4, 7, 10, 9, 1, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3]
         );
-	assert_eq!(cups.current_cup, 2);
+        assert_eq!(cups.current_cup, 2);
     }
 }
